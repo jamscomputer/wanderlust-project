@@ -9,6 +9,7 @@ env:
   REPOSITORY: wanderlust-project
   VERSION: v1
   TELEGRAM_CHAT_ID: "1713880824"
+  NODE_VERSION: '21'
   
 jobs:
   ci-frontend:
