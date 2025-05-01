@@ -68,6 +68,21 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REPOSITORY:frontent-$VERSION .
           docker push $REGISTRY/$REPOSITORY:frontent-$VERSION
+      - name: Send Success Notification
+        if: success()
+        env:
+          BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
+        run: |
+          export BOT_URL="${BOT_URL}"
+          bash scripts/notify.sh "success" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"    
+          
+      - name: Send Failure Notification
+        if: failure()
+        env:
+          BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
+        run: |
+          export BOT_URL="${BOT_URL}"
+          bash scripts/notify.sh "failure" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"
           
   ci-backend:
     runs-on: ubuntu-latest
@@ -106,23 +121,7 @@ jobs:
     needs: [cd-backend, cd-frontend]
     steps:
       - uses: actions/checkout@v4
-      - name: Setup notification script
-        run: |
-          mkdir -p scripts
-          cp .github/scripts/notify.sh scripts/
-          chmod +x scripts/notify.sh
-      - name: Send Success Notification
-        if: success()
-        env:
-          BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
-        run: |
-          export BOT_URL="${BOT_URL}"
-          bash scripts/notify.sh "success" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"    
-          
-      - name: Send Failure Notification
-        if: failure()
-        env:
-          BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
-        run: |
-          export BOT_URL="${BOT_URL}"
-          bash scripts/notify.sh "failure" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"
+      - name: correr script
+        run: echo running script
+    
+  
