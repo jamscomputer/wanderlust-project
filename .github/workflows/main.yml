@@ -127,7 +127,7 @@ jobs:
       - name: Update kubernetes manifests
         run: |
           for app in frontend backend; do
-            sed -i "s|image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${app}-.*|image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${app}-${{ needs.version.outputs.version }}|" kubernetes/${app}.yaml
+            sed -i "s|image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${app}-.*|image: ${{ env.REGISTRY }}/${{ env.REPOSITORY }}:${app}-${{ needs.version.outputs.version }}|" k8s/deployment/${app}.yaml
           done
           
       - name: Deploy to Kubernetes
