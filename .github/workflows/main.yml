@@ -9,7 +9,7 @@ env:
   REPOSITORY: wanderlust-project
   VERSION: v1
   TELEGRAM_CHAT_ID: "1713880824"
-  NODE_VERSION: '21'
+  
   
 jobs:
   ci-frontend:
@@ -61,7 +61,7 @@ jobs:
         env:
           BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
         run: |
-          export BOT_URL= "${BOT_URL}"
+          export BOT_URL="${BOT_URL}"
           bash scripts/notify.sh "start" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"
 
       - name: Docker Build
@@ -75,7 +75,7 @@ jobs:
         env:
           BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
         run: |
-          export BOT_URL= "${BOT_URL}"
+          export BOT_URL="${BOT_URL}"
           bash scripts/notify.sh "success" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"    
           
       - name: Send Start Notification
@@ -83,7 +83,7 @@ jobs:
         env:
           BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
         run: |
-          export BOT_URL= "${BOT_URL}"
+          export BOT_URL="${BOT_URL}"
           bash scripts/notify.sh "failure" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"
 
   ci-backend:
