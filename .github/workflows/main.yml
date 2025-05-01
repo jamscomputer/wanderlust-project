@@ -23,20 +23,13 @@ jobs:
     
   cd-frontend:
     runs-on: ubuntu-latest
-    needs: [ci-frontend]
+    needs: [ci-frontend, cd-backend]
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3.9.1
+      - uses: docker/login-action@v3.4.0 
         with:
-          node-version: '21'
-      - name: Install dependencies
-        run: cd frontend; npm install
-      - name: run tests
-        run: | 
-          cd frontend
-          npm run test
-        continue-on-error: true
+           username: ${{ secrets.DOCKER.USERNAME }}
+           password: ${{ secrets.DOCKER.PASSWORD }}  
   
   ci-backend:
     runs-on: ubuntu-latest
@@ -58,13 +51,8 @@ jobs:
     needs: [ci-backend]
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3.9.1
+      - uses: docker/login-action@v3.4.0 
         with:
-          node-version: '21'
-      - name: Install dependencies
-        run: cd backend; npm install
-      - name: run tests
-        run: | 
-          cd backend
-          npm run test
+           username: ${{ secrets.DOCKER.USERNAME }}
+           password: ${{ secrets.DOCKER.PASSWORD }}
+     
