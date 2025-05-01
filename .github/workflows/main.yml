@@ -70,7 +70,7 @@ jobs:
           docker build -t $REGISTRY/$REPOSITORY:frontent-$VERSION .
           docker push $REGISTRY/$REPOSITORY:frontent-$VERSION
 #Notify
-      - name: Send Start Notification
+      - name: Send Success Notification
         if: success()
         env:
           BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
@@ -78,7 +78,7 @@ jobs:
           export BOT_URL="${BOT_URL}"
           bash scripts/notify.sh "success" "${{ env.VERSION }}" "${{ env.COMMIT_SHA }}" "${{env.BUILD_DATE}}"    
           
-      - name: Send Start Notification
+      - name: Send Failure Notification
         if: failure()
         env:
           BOT_URL: "https://api.telegram.org/bot${{ secrets.TELEGRAM_TOKEN }}/sendMessage"
