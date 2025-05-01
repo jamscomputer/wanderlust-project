@@ -3,6 +3,7 @@ on:
 #Trigger manual workflow
   workflow_dispatch:
   push:
+    branches: [ main ]
 jobs:
   ci:
     runs-on: ubuntu-latest
