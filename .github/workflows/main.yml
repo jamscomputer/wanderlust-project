@@ -132,15 +132,10 @@ jobs:
           
       - name: Deploy to Kubernetes
         run: |
-         kubectl apply -f k8s/deployment/mongo-deployment.yaml
-         kubectl apply -f k8s/deployment/mongo-service.yaml
-         kubectl apply -f k8s/deployment/redis-deployment.yaml
-         kubectl apply -f k8s/deployment/redis-service.yaml
-         kubectl apply -f k8s/deployment/backend-deployment.yaml
-         kubectl apply -f k8s/deployment/backend-service.yaml
-         kubectl apply -f k8s/deployment/frontend-deployment.yaml
-         kubectl apply -f k8s/deployment/frontend-service.yaml
-
+         kubectl apply -f k8s/deployment/mongodb.yaml
+         kubectl apply -f k8s/deployment/redis.yaml
+         kubectl apply -f k8s/deployment/backend.yaml
+         kubectl apply -f k8s/deployment/frontend.yaml
           
   notify:
     needs: [version, deploy]
